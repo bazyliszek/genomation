@@ -452,13 +452,16 @@ setGeneric("readTranscriptFeatures",
 setMethod("readTranscriptFeatures", 
           signature(location = "character"),
           function(location,remove.unusual,up.flank ,down.flank ,unique.prom){
-            
-            # readBed6
+          
+	    # use intergenic function with reducing strands information
+	   intergenic = find_intergenic(location)
+		  
+	    # readBed6
             message('Reading the table...\r')
             bed=readTableFast(location,header=FALSE,skip="auto")                    
             if(remove.unusual)
               bed=bed[grep("_", as.character(bed[,1]),invert=TRUE),]
-            
+            	
             # introns
             message('Calculating intron coordinates...\r')
             introns    = convertBed2Introns(bed)
@@ -512,11 +515,27 @@ setMethod("readTranscriptFeatures",
                              score=rep(0,nrow(prom.df)),
                              name=rep(".",nrow(prom.df)) )
             }
-            
+	  	  
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intragenic=intragenic)
           })
 
+	               
+	    # 
+	The function for intergenic regions:
+# Defining the intergenic function for different annotations
+find_intergenic <- function(mybedfile){
+  #print(paste("The length of original bed file is:", length(mybedfile)))
+  genic_a <- reduce(mybedfile,ignore.strand=T) #28720
+  #print(paste("After ignoring the strand information you have left:", length(genic_a))) #29316
+  #tail(genic_a)
+  intergenic_aa <-gaps(genic_a)
+  #print(paste("Finding gaps", length(intergenic_aa))) #29309
+  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+  #print(paste("final length is", length(intergenic_final))) #29309
+  #intergenic_final
+  return(intergenic_final)
+} 
 
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
