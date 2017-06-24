@@ -484,7 +484,7 @@ setMethod("readTranscriptFeatures",
                             ranges=IRanges(start=bed$V2, end=bed$V3),
                             strand=as.character(bed$V6),
                             score=rep(0,nrow(bed)),
-                            name=rep(".",nrow(bed)) )
+                            name=bed$V4)
 		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
