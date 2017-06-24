@@ -479,7 +479,13 @@ setMethod("readTranscriptFeatures",
                            strand=as.character(tss$V6),
                            score=rep(0,nrow(tss)),
                            name=tss$V4)
-            
+            message('Calculating genes coordinates...\r')
+            genes = GRanges(seqnames=as.character(bed$V1),
+                            ranges=IRanges(start=bed$V2, end=bed$V3),
+                            strand=as.character(bed$V6),
+                            score=rep(0,nrow(bed)),
+                            name=rep(".",nrow(bed)) )
+		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
             # + strand
@@ -508,7 +514,7 @@ setMethod("readTranscriptFeatures",
             }
             
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
           })
 
 
