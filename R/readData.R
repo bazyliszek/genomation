@@ -520,9 +520,6 @@ setMethod("readTranscriptFeatures",
             GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intragenic=intragenic)
           })
 
-	               
-	    # 
-	The function for intergenic regions:
 # Defining the intergenic function for different annotations
 find_intergenic <- function(mybedfile){
   #print(paste("The length of original bed file is:", length(mybedfile)))
