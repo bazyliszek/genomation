@@ -520,17 +520,21 @@ setMethod("readTranscriptFeatures",
 	
 # Defining the intergenic function for different annotations
 
+--- adding the intergenic regions 
+	   
 setGeneric("my_intergenic", 
-function(mybedfile,
+function(mybedfile)
 standardGeneric("my_intergenic"))
-	   	   
-my_intergenic <- function(mybedfile){
-  message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
-  readgenic <- readBed(mybedfile)
-  intergenic_temp = gaps(reduce(genes, ignore.strand=F))
-  intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
-  return(intergenic)
-}
+
+setMethod("my_intergenic",
+	  signature(mybedfile = "GenomicRanges")
+	  function(mybedfile){
+          message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
+          readgenic <- readBed(mybedfile)
+          intergenic_temp = gaps(reduce(genes, ignore.strand=F))
+          intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
+          return(intergenic)
+})
 	   
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
