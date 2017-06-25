@@ -519,9 +519,6 @@ setMethod("readTranscriptFeatures",
           })
 	
 # Defining the intergenic function for different annotations
-
---- adding the intergenic regions 
-	   
 setGeneric("my_intergenic", 
 function(mybedfile)
 standardGeneric("my_intergenic"))
