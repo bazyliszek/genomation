@@ -486,7 +486,7 @@ setMethod("readTranscriptFeatures",
                             strand=as.character(bed$V6),
                             score=rep(0,nrow(bed)),
                             name=bed$V4)
-	    message('Calculating intrergenics coordinates...\r')
+	    message('Calculating intergenic coordinates based on genes coordinates and reducing strands from the function....\r')
 	    intergenics = my_intergenic(bed)
 		  
             message('Calculating promoter coordinates...\r')
