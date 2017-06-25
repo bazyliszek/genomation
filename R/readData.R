@@ -487,10 +487,6 @@ setMethod("readTranscriptFeatures",
                             score=rep(0,nrow(bed)),
                             name=bed$V4)
 		  
-	    message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r')
-            intergenic = gaps(reduce(genes, ignore.strand=F))
-	    #intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
-		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
             # + strand
@@ -519,23 +515,19 @@ setMethod("readTranscriptFeatures",
             }
 	  	  
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenic=intergenic)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
           })
 	
 # Defining the intergenic function for different annotations
-#find_intergenic <- function(mybedfile){
-  #print(paste("The length of original bed file is:", length(mybedfile)))
-  #readgenic <- readBed(mybedfile)	
-  #genic_a <- reduce(readgenic,ignore.strand=T)
-  #print(paste("After ignoring the strand information you have left:", length(genic_a)))
-  #tail(genic_a)
-  #intergenic_aa <-gaps(genic_a)
-  #print(paste("Finding gaps", length(intergenic_aa)))
-  #intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
-  #print(paste("final length is", length(intergenic_final)))
-  #intergenic_final
-  #return(intergenic_final)
-#} 	   
+
+find_intergenic <- function(mybedfile){
+message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r')
+  readgenic <- readBed(mybedfile)
+  intergenic_temp = gaps(reduce(genes, ignore.strand=F))
+  intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
+  return(intergenic)
+}
+	   
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
 #' The GenomicRanges object needs to be properly formated for the function to work.
