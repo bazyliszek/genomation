@@ -488,7 +488,7 @@ setMethod("readTranscriptFeatures",
                             name=bed$V4)
 		  
 	    message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r')
-            intergenic_temp = gaps(reduce(genes, ignore.strand=F))
+            intergenic = gaps(reduce(genes, ignore.strand=F))
 	    #intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
 		  
             message('Calculating promoter coordinates...\r')
