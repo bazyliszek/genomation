@@ -535,6 +535,18 @@ setMethod("my_intergenic",
           return(intergenic)
 })
 	   
+my_intergenic <- function(mybedfile){
+  genic_a <- reduce(mybedfile,ignore.strand=T)
+  intergenic_aa <-gaps(genic_a)
+  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+  return(final)
+}
+
+	   
+	   
+	   
+	   
+	   
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
 #' The GenomicRanges object needs to be properly formated for the function to work.
