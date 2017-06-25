@@ -517,7 +517,7 @@ setMethod("readTranscriptFeatures",
             }
 	  	  
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intragenic=intragenic)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenic=intergenic)
           })
 
 # Defining the intergenic function for different annotations
