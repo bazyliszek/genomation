@@ -526,7 +526,7 @@ function(location)
 standardGeneric("my_intergenic"))
 
 setMethod("my_intergenic",
-	  signature(location = "character"),
+	  signature(location = "GRanges"),
 	  function(location){
           message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
           readgenic <- readBed(location)
