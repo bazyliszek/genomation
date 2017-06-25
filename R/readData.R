@@ -487,7 +487,7 @@ setMethod("readTranscriptFeatures",
                             score=rep(0,nrow(bed)),
                             name=bed$V4)
 	    message('Calculating intergenic coordinates based on genes coordinates and reducing strands from the function....\r')
-	    intergenics = my_intergenic(bed)
+	    intergenics = my_intergenic(location)
 		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
@@ -535,8 +535,10 @@ setMethod("my_intergenic",
           return(intergenic)
 })
 	   
-my_intergenic <- function(mybedfile){
-  mybed <- readBed(mybedfile)
+my_intergenic <- function(location){
+mybed=readTableFast(location,header=FALSE,skip="auto")                    
+            if(remove.unusual)
+              bed=bed[grep("_", as.character(bed[,1]),invert=TRUE),] 
   genic_a <- reduce(mybed,ignore.strand=T)
   intergenic_aa <-gaps(genic_a)
   intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
