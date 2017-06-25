@@ -413,22 +413,6 @@ setMethod("readFeatureFlank",
             
             return(x)
           })
----------------
-	
-# Defining the intergenic function for different annotations
-find_intergenic <- function(mybedfile){
-  #print(paste("The length of original bed file is:", length(mybedfile)))
-  readgenic <- readBed(mybedfile)	
-  genic_a <- reduce(readgenic,ignore.strand=T)
-  #print(paste("After ignoring the strand information you have left:", length(genic_a)))
-  #tail(genic_a)
-  intergenic_aa <-gaps(genic_a)
-  #print(paste("Finding gaps", length(intergenic_aa)))
-  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
-  #print(paste("final length is", length(intergenic_final)))
-  #intergenic_final
-  return(intergenic_final)
-} 
 
 	   
 # ---------------------------------------------------------------------------- #
@@ -469,15 +453,16 @@ setGeneric("readTranscriptFeatures",
 setMethod("readTranscriptFeatures", 
           signature(location = "character"),
           function(location,remove.unusual,up.flank ,down.flank ,unique.prom){
-          
-	    # use intergenic function with reducing strands information
-	   intergenic = find_intergenic(location)
 		  
 	    # readBed6
             message('Reading the table...\r')
             bed=readTableFast(location,header=FALSE,skip="auto")                    
             if(remove.unusual)
               bed=bed[grep("_", as.character(bed[,1]),invert=TRUE),]
+		  
+	   # use intergenic function with reducing strands information
+	   message('Reading the table test...\r')
+	 intergenic = find_intergenic(bed)
             	
             # introns
             message('Calculating intron coordinates...\r')
@@ -536,7 +521,24 @@ setMethod("readTranscriptFeatures",
             message('Outputting the final GRangesList...\r\n')
             GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenic=intergenic)
           })
-
+	
+# Defining the intergenic function for different annotations
+find_intergenic <- function(mybedfile){
+  #print(paste("The length of original bed file is:", length(mybedfile)))
+  readgenic <- readBed(mybedfile)	
+  genic_a <- reduce(readgenic,ignore.strand=T)
+  #print(paste("After ignoring the strand information you have left:", length(genic_a)))
+  #tail(genic_a)
+  intergenic_aa <-gaps(genic_a)
+  #print(paste("Finding gaps", length(intergenic_aa)))
+  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+  #print(paste("final length is", length(intergenic_final)))
+  #intergenic_final
+  return(intergenic_final)
+} 
+	   
+	   
+	   
 
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
