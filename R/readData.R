@@ -520,7 +520,7 @@ setMethod("readTranscriptFeatures",
 	
 # Defining the intergenic function for different annotations
 setGeneric("my_intergenic", 
-function(mybedfile)
+function(genomic_range)
 standardGeneric("my_intergenic"))
 
 setMethod("my_intergenic",
