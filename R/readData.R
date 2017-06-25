@@ -536,7 +536,8 @@ setMethod("my_intergenic",
 })
 	   
 my_intergenic <- function(mybedfile){
-  genic_a <- reduce(mybedfile,ignore.strand=T)
+  mybed <- readBed(mybedfile)
+  genic_a <- reduce(mybed,ignore.strand=T)
   intergenic_aa <-gaps(genic_a)
   intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
   return(final)
