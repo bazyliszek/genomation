@@ -413,7 +413,24 @@ setMethod("readFeatureFlank",
             
             return(x)
           })
+---------------
+	
+# Defining the intergenic function for different annotations
+find_intergenic <- function(mybedfile){
+  #print(paste("The length of original bed file is:", length(mybedfile)))
+  readgenic <- readBed(mybedfile)	
+  genic_a <- reduce(readgenic,ignore.strand=T)
+  #print(paste("After ignoring the strand information you have left:", length(genic_a)))
+  #tail(genic_a)
+  intergenic_aa <-gaps(genic_a)
+  #print(paste("Finding gaps", length(intergenic_aa)))
+  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+  #print(paste("final length is", length(intergenic_final)))
+  #intergenic_final
+  return(intergenic_final)
+} 
 
+	   
 # ---------------------------------------------------------------------------- #
 #' Function for reading exon intron and promoter structure from a given bed file
 #'
@@ -520,19 +537,6 @@ setMethod("readTranscriptFeatures",
             GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenic=intergenic)
           })
 
-# Defining the intergenic function for different annotations
-find_intergenic <- function(mybedfile){
-  #print(paste("The length of original bed file is:", length(mybedfile)))
-  genic_a <- reduce(mybedfile,ignore.strand=T) #28720
-  #print(paste("After ignoring the strand information you have left:", length(genic_a))) #29316
-  #tail(genic_a)
-  intergenic_aa <-gaps(genic_a)
-  #print(paste("Finding gaps", length(intergenic_aa))) #29309
-  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
-  #print(paste("final length is", length(intergenic_final))) #29309
-  #intergenic_final
-  return(intergenic_final)
-} 
 
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
