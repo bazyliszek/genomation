@@ -524,7 +524,7 @@ function(mybedfile)
 standardGeneric("my_intergenic"))
 
 setMethod("my_intergenic",
-	  signature(mybedfile = "GenomicRanges")
+	  signature(mybedfile = "GenomicRanges"),
 	  function(mybedfile){
           message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
           readgenic <- readBed(mybedfile)
