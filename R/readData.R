@@ -520,8 +520,12 @@ setMethod("readTranscriptFeatures",
 	
 # Defining the intergenic function for different annotations
 
+setGeneric("my_intergenic", 
+function(mybedfile,
+standardGeneric("my_intergenic"))
+	   	   
 my_intergenic <- function(mybedfile){
-  message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r')
+  message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
   readgenic <- readBed(mybedfile)
   intergenic_temp = gaps(reduce(genes, ignore.strand=F))
   intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
