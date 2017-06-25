@@ -458,11 +458,7 @@ setMethod("readTranscriptFeatures",
             message('Reading the table...\r')
             bed=readTableFast(location,header=FALSE,skip="auto")                    
             if(remove.unusual)
-              bed=bed[grep("_", as.character(bed[,1]),invert=TRUE),]
-		  
-	   # use intergenic function with reducing strands information
-	   message('Reading the table test...\r')
-	 intergenic = find_intergenic(bed)
+              bed=bed[grep("_", as.character(bed[,1]),invert=TRUE),] 
             	
             # introns
             message('Calculating intron coordinates...\r')
@@ -490,6 +486,10 @@ setMethod("readTranscriptFeatures",
                             strand=as.character(bed$V6),
                             score=rep(0,nrow(bed)),
                             name=bed$V4)
+		  
+	    message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r')
+            intergenic_temp = gaps(reduce(genes, ignore.strand=T))
+	    intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
 		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
@@ -523,23 +523,19 @@ setMethod("readTranscriptFeatures",
           })
 	
 # Defining the intergenic function for different annotations
-find_intergenic <- function(mybedfile){
+#find_intergenic <- function(mybedfile){
   #print(paste("The length of original bed file is:", length(mybedfile)))
-  readgenic <- readBed(mybedfile)	
-  genic_a <- reduce(readgenic,ignore.strand=T)
+  #readgenic <- readBed(mybedfile)	
+  #genic_a <- reduce(readgenic,ignore.strand=T)
   #print(paste("After ignoring the strand information you have left:", length(genic_a)))
   #tail(genic_a)
-  intergenic_aa <-gaps(genic_a)
+  #intergenic_aa <-gaps(genic_a)
   #print(paste("Finding gaps", length(intergenic_aa)))
-  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+  #intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
   #print(paste("final length is", length(intergenic_final)))
   #intergenic_final
-  return(intergenic_final)
-} 
-	   
-	   
-	   
-
+  #return(intergenic_final)
+#} 	   
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
 #' The GenomicRanges object needs to be properly formated for the function to work.
