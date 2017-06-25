@@ -486,6 +486,8 @@ setMethod("readTranscriptFeatures",
                             strand=as.character(bed$V6),
                             score=rep(0,nrow(bed)),
                             name=bed$V4)
+	    message('Calculating intrergenics coordinates...\r')
+	    intergenics = my_intergenic(bed)
 		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
@@ -515,7 +517,7 @@ setMethod("readTranscriptFeatures",
             }
 	  	  
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenics=intergenics)
           })
 	
 # Defining the intergenic function for different annotations
