@@ -522,7 +522,7 @@ setMethod("readTranscriptFeatures",
 	
 # Defining the intergenic function for different annotations
 setGeneric("my_intergenic", 
-function(location)
+function(location, remove.unusual=TRUE)
 standardGeneric("my_intergenic"))
 
 setMethod("my_intergenic",
