@@ -540,8 +540,8 @@ convertBed2Intergenics <- function(mybed){
    g = makeGRangesFromDataFrame(
     mybed, 
     keep.extra.columns=FALSE, 
-    starts.in.df.are.0based=zero.based,
-    ignore.strand=is.null(strand))
+    starts.in.df.are.0based=FALSE,
+    ignore.strand=TRUE)
   genic_a <- reduce(g,ignore.strand=T)
   intergenic_aa <-gaps(genic_a)
   intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
