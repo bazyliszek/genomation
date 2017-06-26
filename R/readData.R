@@ -1,31 +1,3 @@
-
-Skip to content
-This repository
-
-    Pull requests
-    Issues
-    Marketplace
-    Gist
-
-    @bazyliszek
-
-13
-32
-
-    15
-
-BIMSBbioinfo/genomation
-Code
-Issues 10
-Pull requests 2
-Projects 0
-Wiki
-genomation/R/readData.R
-457e05d on Apr 7
-v.franke Merge branch 'master' into to-push
-550 lines (498 sloc) 22.4 KB
-# ---------------------------------------------------------------------------- #
-
 read.zip <- function(file, ...) {
   zipFileInfo <- unzip(file, list=TRUE)
   if(nrow(zipFileInfo) > 1)
