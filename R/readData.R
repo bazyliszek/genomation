@@ -537,7 +537,12 @@ setMethod("readTranscriptFeatures",
 #})
 	   
 convertBed2Intergenics <- function(mybed){
-  genic_a <- reduce(mybed,ignore.strand=T)
+   g = makeGRangesFromDataFrame(
+    mybed, 
+    keep.extra.columns=FALSE, 
+    starts.in.df.are.0based=zero.based,
+    ignore.strand=is.null(strand))
+  genic_a <- reduce(g,ignore.strand=T)
   intergenic_aa <-gaps(genic_a)
   intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
   return(intergenic_final)
