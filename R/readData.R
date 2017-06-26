@@ -463,6 +463,15 @@ setMethod("readTranscriptFeatures",
             # exons
             message('Calculating exon coordinates...\r')
             exons    = convertBed2Exons(bed)
+	
+	    # genes  
+	    message('Calculating genes coordinates...\r')
+	    genes = GRanges(seqnames=as.character(bed$V1),
+	    ranges=IRanges(start=bed$V2, end=bed$V3),
+	    strand=as.character(bed$V6),
+	    score=rep(0,nrow(bed)),
+	    name=bed$V4)
+
             
             # get the locations of TSSes
             message('Calculating TSS coordinates...\r')
@@ -506,7 +515,7 @@ setMethod("readTranscriptFeatures",
             }
             
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
           })
 
 
@@ -545,8 +554,4 @@ gffToGRanges = function(gff.file, filter=NULL, zero.based=FALSE, ensembl=FALSE){
   
   return(gff)
 }
-
-    Contact GitHub API Training Shop Blog About 
-
-    © 2017 GitHub, Inc. Terms Privacy Security Status Help 
 
