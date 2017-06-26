@@ -526,13 +526,13 @@ function(location, remove.unusual=TRUE)
 standardGeneric("my_intergenic"))
 
 setMethod("my_intergenic",
-	  signature(location = "data.frame"),
-	  function(location){
+	  signature(mybed = "GRanges"),
+	  function(mybed){
           message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
-          readgenic <- readBed(location)
-          intergenic_temp = gaps(reduce(readgenic, ignore.strand=F))
-          intergenic = intergenic_temp[strand(intergenic_temp) == "*"]
-          return(intergenic)
+      	  genic_a <- reduce(mybed,ignore.strand=T)
+          intergenic_aa <-gaps(genic_a)
+          intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+          return(intergenic_final)
 })
 	   
 my_intergenic <- function(mybed){
