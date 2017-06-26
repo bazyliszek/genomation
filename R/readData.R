@@ -518,7 +518,18 @@ setMethod("readTranscriptFeatures",
             GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
           })
 
-
+	# Calculating the rest 
+	   
+#intergenics = convertBed2Intergenics(location)
+convertBed2Intergenics <- function(mybedfile){
+message('Calculating intergenic coordinates ...\r')
+mybed = readBed(mybedfile)
+genic_a <- reduce(mybed,ignore.strand=T)
+intergenic_aa <-gaps(genic_a)
+intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+return(intergenic_final)
+}
+	   
 # ---------------------------------------------------------------------------- #
 #' Converts a gff formated data.frame into a GenomicRanges object. 
 #' The GenomicRanges object needs to be properly formated for the function to work.
