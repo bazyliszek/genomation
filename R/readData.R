@@ -515,7 +515,7 @@ setMethod("readTranscriptFeatures",
             }
 	
 	     message('Calculating intergenic coordinates ...\r')
-	    intergenics = convertBed2Intergenics(bed)
+	    intergenics = convertBed2Intergenics(genes)
 	  	  
             message('Outputting the final GRangesList...\r\n')
             GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenics=intergenics)
@@ -537,12 +537,7 @@ setMethod("readTranscriptFeatures",
 #})
 	   
 convertBed2Intergenics <- function(mybed){
-   g = makeGRangesFromDataFrame(
-    mybed, 
-    keep.extra.columns=FALSE, 
-    starts.in.df.are.0based=FALSE,
-    ignore.strand=TRUE)
-  genic_a <- reduce(g,ignore.strand=T)
+  genic_a <- reduce(mybed,ignore.strand=T)
   intergenic_aa <-gaps(genic_a)
   intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
   return(intergenic_final)
