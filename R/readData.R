@@ -522,19 +522,19 @@ setMethod("readTranscriptFeatures",
           })
 	
 # Defining the intergenic function for different annotations
-setGeneric("convertBed2Intergenics", 
-function(location, remove.unusual=TRUE)
-standardGeneric("convertBed2Intergenics"))
+#setGeneric("convertBed2Intergenics", 
+#function(location, remove.unusual=TRUE)
+#standardGeneric("convertBed2Intergenics"))
 
-setMethod("convertBed2Intergenics",
-	  signature(mybed = "GRanges"),
-	  function(mybed){
-          message('Calculating intergenic coordinates based on genes coordinates...\r\n')
-      	  genic_a <- reduce(mybed,ignore.strand=T)
-          intergenic_aa <-gaps(genic_a)
-          intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
-          return(intergenic_final)
-})
+#setMethod("convertBed2Intergenics",
+#	  signature(mybed = "GRanges"),
+#	  function(mybed){
+#          message('Calculating intergenic coordinates based on genes coordinates...\r\n')
+#      	  genic_a <- reduce(mybed,ignore.strand=T)
+#          intergenic_aa <-gaps(genic_a)
+#          intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+#         return(intergenic_final)
+#})
 	   
 convertBed2Intergenics <- function(mybed){
   genic_a <- reduce(mybed,ignore.strand=T)
