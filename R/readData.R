@@ -536,10 +536,10 @@ setMethod("my_intergenic",
 })
 	   
 my_intergenic <- function(mygenes){
-  genic_a <- reduce(mygenes,ignore.strand=T)
+  genic_a <- reduce(mygenes,ignore.strand=F)
   intergenic_aa <-gaps(genic_a)
-  intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
-  return(intergenic_final)
+  #intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+  return(intergenic_aa)
 }
 
 	   
