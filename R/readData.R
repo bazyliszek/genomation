@@ -512,13 +512,10 @@ setMethod("readTranscriptFeatures",
                              strand=as.character(prom.df$V6),
                              score=rep(0,nrow(prom.df)),
                              name=rep(".",nrow(prom.df)) )
-            }
-	
-	     message('Calculating intergenic coordinates ...\r')
-	    intergenics = convertBed2Intergenics(location)
+            }	
 	  	  
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenics=intergenics)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
           })
 	
 # Defining the intergenic function for different annotations
@@ -535,6 +532,9 @@ setMethod("readTranscriptFeatures",
 #          intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
 #         return(intergenic_final)
 #})
+	  
+message('Calculating intergenic coordinates ...\r')
+intergenics = convertBed2Intergenics(location)
 	   
 convertBed2Intergenics <- function(mybedfile){
   mybed = readBed(mybedfile)
