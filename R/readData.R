@@ -486,8 +486,6 @@ setMethod("readTranscriptFeatures",
                             strand=as.character(bed$V6),
                             score=rep(0,nrow(bed)),
                             name=bed$V4)
-	    message('Calculating intergenic coordinates based on genes coordinates and reducing strands from the function....\r')
-	    intergenics = my_intergenic(bed)
 		  
             message('Calculating promoter coordinates...\r')
             # get the locations of promoters
@@ -515,27 +513,30 @@ setMethod("readTranscriptFeatures",
                              score=rep(0,nrow(prom.df)),
                              name=rep(".",nrow(prom.df)) )
             }
+	
+	     message('Calculating intergenic coordinates ...\r')
+	    intergenics = convertBed2Intergenics(bed)
 	  	  
             message('Outputting the final GRangesList...\r\n')
             GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenics=intergenics)
           })
 	
 # Defining the intergenic function for different annotations
-setGeneric("my_intergenic", 
+setGeneric("convertBed2Intergenics", 
 function(location, remove.unusual=TRUE)
-standardGeneric("my_intergenic"))
+standardGeneric("convertBed2Intergenics"))
 
-setMethod("my_intergenic",
+setMethod("convertBed2Intergenics",
 	  signature(mybed = "GRanges"),
 	  function(mybed){
-          message('Calculating intergenic coordinates based on genes coordinates and reducing strands...\r\n')
+          message('Calculating intergenic coordinates based on genes coordinates...\r\n')
       	  genic_a <- reduce(mybed,ignore.strand=T)
           intergenic_aa <-gaps(genic_a)
           intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
           return(intergenic_final)
 })
 	   
-my_intergenic <- function(mybed){
+convertBed2Intergenics <- function(mybed){
   genic_a <- reduce(mybed,ignore.strand=T)
   intergenic_aa <-gaps(genic_a)
   intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
