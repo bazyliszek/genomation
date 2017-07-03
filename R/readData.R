@@ -471,6 +471,13 @@ setMethod("readTranscriptFeatures",
 	    strand=as.character(bed$V6),
 	    score=rep(0,nrow(bed)),
 	    name=bed$V4)
+		  
+	 # Intergenic regions
+ 	message('Calculating intergenic coordinates ...\r')
+	genic_a <- reduce(bed,ignore.strand=T)
+	intergenic_aa <-gaps(genic_a)
+	intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
+ 
 
             
             # get the locations of TSSes
