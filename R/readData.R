@@ -521,7 +521,7 @@ setMethod("readTranscriptFeatures",
 	# Calculating the rest 
 	   
 #intergenics = convertBed2Intergenics(location)
-convertBed2Intergenics <- function(mybedfile){
+convertBed2Intergenics_temp <- function(mybedfile){
 message('Calculating intergenic coordinates ...\r')
 mybed = readBed(mybedfile)
 genic_a <- reduce(mybed,ignore.strand=T)
