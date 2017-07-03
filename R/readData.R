@@ -478,7 +478,16 @@ setMethod("readTranscriptFeatures",
 	#genic_a <- genes
 	intergenic_aa <-gaps(genic_a)
 	intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
- 
+ 	intergenic_final <- GRanges(seqnames = intergenic_final$seqnames, 
+				    ranges=intergenic_final$ranges,
+				    strand=intergenic_final$strand, 
+				    score=rep(0,nrow(intergenic_final)),
+	    			name=rep(0,nrow(intergenic_final)))
+				    
+
+				    
+		  
+		  
 
             
             # get the locations of TSSes
