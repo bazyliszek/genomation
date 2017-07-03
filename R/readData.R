@@ -474,7 +474,8 @@ setMethod("readTranscriptFeatures",
 		  
 	 # Intergenic regions
  	message('Calculating intergenic coordinates ...\r')
-	genic_a <- reduce(genes,ignore.strand=T)
+	#genic_a <- reduce(genes,ignore.strand=T)
+	genic_a <- genes
 	intergenic_aa <-gaps(genic_a)
 	intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
  
