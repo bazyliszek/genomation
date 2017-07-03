@@ -479,7 +479,7 @@ setMethod("readTranscriptFeatures",
 	intergenic_aa <-gaps(genic_a)
 	intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
  	intergenic_final <- GRanges(seqnames = intergenic_final@seqnames, 
-				    ranges=IRanges(start=intergenic_final@ranges@start, end=intergenic_final@ranges@width), 
+				    ranges=IRanges(start=intergenic_final@ranges@start, end= intergenic_final@ranges@start + intergenic_final@ranges@width), 
 				    strand=intergenic_final@strand, 
 				    score=rep(0,length(intergenic_final@ranges@start)),
 	    			name=rep(0,length(intergenic_final@ranges@start)))
