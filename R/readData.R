@@ -474,8 +474,8 @@ setMethod("readTranscriptFeatures",
 		  
 	 # Intergenic regions
  	message('Calculating intergenic coordinates ...\r')
-	#genic_a <- reduce(genes,ignore.strand=T)
-	genic_a <- genes
+	genic_a <- reduce(genes,ignore.strand=T)
+	#genic_a <- genes
 	intergenic_aa <-gaps(genic_a)
 	intergenic_final <- intergenic_aa[strand(intergenic_aa) == "*"]
  
@@ -523,7 +523,7 @@ setMethod("readTranscriptFeatures",
             }
             
             message('Outputting the final GRangesList...\r\n')
-            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes)
+            GRangesList(exons=exons,introns=introns,promoters=prom,TSSes=tssg, genes=genes, intergenic=intergenic_final)
           })
 
 	# Calculating the rest 
